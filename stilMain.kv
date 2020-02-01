@@ -1,0 +1,72 @@
+ShotManager:
+    IntroShot:
+    MenuShot:
+
+<IntroShot>:
+    name: "intro"
+
+    BoxLayout:
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        padding: 50
+        spacing: 10
+        Image:
+            source: 'pic/2.png'
+        SrkButton:
+            text: "Hallo"
+            back_color: .12, .56, 1, 1
+            font_size: 40
+            height: 50
+            size_hint: .5, None
+            pos_hint: {'center_x': .5}
+            on_release:
+                app.root.current = "menu"
+                root.manager.transition.direction = "up"
+
+
+<MenuShot>:
+    name: "menu"
+
+    BoxLayout:
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+
+        Image:
+            source: 'pic/3.png'
+        GridLayout:
+            cols: 3
+            padding:20
+            spacing: 10
+            # <--------
+            Csm1Button:
+                id: profil
+                back_color: (.12, .56, 1, 1)
+                on_release:
+                    app.root.current = "intro"
+                Image:
+                    source: 'iko/iko1.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.7* self.parent.width, 0.7*self.parent.height)
+            NrmButton:
+                Image:
+                    source: 'iko/iko2.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.7* self.parent.width, 0.7*self.parent.height)
+            Csm2Button:
+                text: '?!'
+            NrmButton:
+                text: '?!'
+            NrmButton:
+                text: '?!'
+            NrmButton:
+                text: '?!'
+            Csm3Button:
+                text: '?!'
+            NrmButton:
+                text: '?!'
+            Csm4Button:
+                text: '?!'
+
+

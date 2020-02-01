@@ -1,0 +1,100 @@
+<NrmButton@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    background_color: (0.12, 0.56, 1.0, 1)
+
+<SrkRndButton@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.12, 0.56, 1.0, 1)
+    border_radius: 18
+    color: self.back_color
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        Line:
+            rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], self.border_radius)
+            width: 1.2
+
+<RndButton@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.12, 0.56, 1.0, 1)
+    border_radius: [18]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<SrkButton@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (1,0,1,1)
+    color: self.back_color
+    bold: True
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        Line:
+            rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1])
+            width: 1.2
+
+
+<Csm2Button@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.12, 0.56, 1.0, 1)
+    border_radius: [0,18,0,0]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<Csm4Button@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.12, 0.56, 1.0, 1)
+    border_radius: [0,0,18,0]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<Csm3Button@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.12, 0.56, 1.0, 1)
+    border_radius: [0,0,0,18]
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<Csm1Button@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.12, 0.56, 1.0, 1)
+    border_radius: 18
+    color: self.back_color
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        Line:
+            rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], 0,0,0,self.border_radius)
+            width: 1.2
