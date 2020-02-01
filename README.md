@@ -1,2 +1,2 @@
-# ianua.beta
+# ianua.kivy
 Practice project of an app that manages a dormitory.
