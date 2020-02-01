@@ -18,7 +18,7 @@ class ShotManager(ScreenManager):
     pass
 
 
-kv = Builder.load_file("stilButtonn.kv")
+kv = Builder.load_file("stilButton.kv")
 kv = Builder.load_file("stilMain.kv")
 Window.clearcolor = (.13,.13,.19,1)
 
