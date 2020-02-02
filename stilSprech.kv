@@ -1,0 +1,80 @@
+<SprechShot>:
+    name: "sprech"
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Sprechstunde"
+        #<---------
+        ContainerLabel:
+            #////Hier beginnt Content\\\\
+            BoxLayout:
+                size_hint: 1, .2
+                padding: 20, 15
+                spacing: 10
+                orientation: 'horizontal'
+                TexFnt:
+                    id: drgudrunrefer
+                    text: 'Frau Dr. Gudrun Morasch:'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    font_size: 0.3*self.parent.height
+
+
+            BoxLayout:
+                size_hint: 1, .9
+                padding: 10
+                spacing: 5
+                orientation: 'vertical'
+                TexFnt:
+                    text: root.sprechen()
+                    halign: 'center'
+                    valign: 'top'
+                    text_size: self.size
+                    font_size: 0.8*drgudrunrefer.font_size
+
+
+
+
+
+
+
+        #<---------Footer
+        BoxLayout:
+            size_hint: 1, .1
+            padding: 0
+            spacing: 1
+            orientation: 'horizontal'
+            FooterButton:
+                id: 'home'
+                text: 'Home'
+                bold: True
+                font_name: 'fonts/ITC_Bold.otf'
+                on_release:
+                    app.root.current = "menu"
+                    root.manager.transition.direction = "down"
+            Footer2Button:
+                id: 'tel'
+                Image:
+                    source: 'iko/menu/kontakt.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)
+            Footer2Button:
+                id: 'Notif'
+                Image:
+                    source: 'iko/menu/flash.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)
+            Footer2Button:
+                id: 'Setti'
+                Image:
+                    source: 'iko/menu/settings.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)

@@ -1,7 +1,8 @@
 ShotManager:
     IntroShot:
     MenuShot:
-    MenShot:
+    SprechShot:
+
 
 <IntroShot>:
     name: "intro"
@@ -57,8 +58,6 @@ ShotManager:
                     spacing: 20
                     MenuItem:
                         MenuButton:
-                            on_release:
-                                app.root.current = "men"
                             ImgCenter:
                                 source: 'iko/menu/profil.png'
                         TexFnt:
@@ -80,6 +79,9 @@ ShotManager:
                             size_hint: 1, .002*self.parent.width
                     MenuItem:
                         MenuButton:
+                            on_release:
+                                app.root.current = "sprech"
+                                root.manager.transition.direction = "up"
                             ImgCenter:
                                 source: 'iko/menu/sprechstd.png'
                         TexFnt:
@@ -174,50 +176,6 @@ ShotManager:
 
 
 
-#<---------------------------------------- Keepin -----------------------
 
-<MenShot>:
-    name: "men"
-
-    BoxLayout:
-        background_color: 1, 1, 1, 1
-        orientation: 'vertical'
-
-
-        Image:
-            source: 'pic/3.png'
-        GridLayout:
-            cols: 3
-            padding: 27
-            spacing: 27
-            # <--------
-            Rnd2Button:
-                id: profil
-                back_color: (1,1,1,1)
-                on_release:
-                    app.root.current = "intro"
-                Label:
-                    text: 'tesst'
-            NrmButton:
-                text: 'tesst'
-                Image:
-                    source: 'iko/iko2.png'
-                    y: self.parent.y + (self.parent.height - self.height)/2
-                    x: self.parent.x + (self.parent.width - self.width)/2
-                    size: (0.7* self.parent.width, 0.7*self.parent.height)
-            Csm2Button:
-                text: '?!'
-            NrmButton:
-                text: '?!'
-            NrmButton:
-                text: '?!'
-            NrmButton:
-                text: '?!'
-            Csm3Button:
-                text: '?!'
-            NrmButton:
-                text: '?!'
-            Csm4Button:
-                text: '?!'
 
 
