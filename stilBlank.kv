@@ -1,0 +1,51 @@
+<SprechShot>:
+    name: "sprech"
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Sprechstunde"
+        #<---------
+        ContainerLabel:
+            #////Hier beginnt Content\\\\
+
+
+
+            #////Hier beginnt Content\\\\
+
+
+        #<---------Footer
+        BoxLayout:
+            size_hint: 1, .1
+            padding: 0
+            spacing: 1
+            orientation: 'horizontal'
+            FooterButton:
+                id: 'home'
+                text: 'Home'
+                bold: True
+                font_name: 'fonts/ITC_Bold.otf'
+            Footer2Button:
+                id: 'tel'
+                Image:
+                    source: 'iko/menu/kontakt.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)
+            Footer2Button:
+                id: 'Notif'
+                Image:
+                    source: 'iko/menu/flash.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)
+            Footer2Button:
+                id: 'Setti'
+                Image:
+                    source: 'iko/menu/settings.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)
