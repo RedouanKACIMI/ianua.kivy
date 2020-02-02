@@ -21,9 +21,6 @@ auge.execute("SELECT * FROM sprechstd")
 sprechstden = auge.fetchall()
 
 
-# for x in sprechstden:
-#   print(x[2]+' bis '+x[3])
-
 
 
 
@@ -42,6 +39,9 @@ class SprechShot(Screen):
             sprch += str(x[1])+' /  '+ x[2] + ' - '+ x[3]+'\n'
         return sprch
 
+class BlnkShot(Screen):
+    pass
+
 
 class ShotManager(ScreenManager):
     pass
@@ -51,6 +51,7 @@ class ShotManager(ScreenManager):
 kv = Builder.load_file("stilButton.kv")
 kv = Builder.load_file("stilLabel.kv")
 kv = Builder.load_file("stilSprech.kv")
+kv = Builder.load_file("stilBlank.kv")
 kv = Builder.load_file("stilMain.kv")
 Window.clearcolor = (1, 1, 1, 1)
 

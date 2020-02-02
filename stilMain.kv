@@ -2,6 +2,7 @@ ShotManager:
     IntroShot:
     MenuShot:
     SprechShot:
+    BlnkShot:
 
 
 <IntroShot>:
@@ -167,6 +168,8 @@ ShotManager:
                     size: (0.5* self.parent.width, 0.5*self.parent.height)
             Footer2Button:
                 id: 'Setti'
+                on_release:
+                    app.root.current = "blnk"
                 Image:
                     source: 'iko/menu/settings.png'
                     y: self.parent.y + (self.parent.height - self.height)/2

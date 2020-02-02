@@ -1,5 +1,5 @@
-<SprechShot>:
-    name: "sprech"
+<BlnkShot>:
+    name: "blnk"
     BoxLayout:
         padding: 0
         spacing: 0
@@ -12,7 +12,17 @@
         ContainerLabel:
             #////Hier beginnt Content\\\\
 
-
+            ScrollView:
+                BoxLayout:
+                    size_hint_y:None
+                    height:root.height * 1.5
+                    orientation:'vertical'
+                    Button:
+                        text:'1'
+                    Button:
+                        text:'2'
+                    Button:
+                        text:'3'
 
             #////Hier beginnt Content\\\\
 

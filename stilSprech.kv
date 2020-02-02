@@ -24,18 +24,20 @@
                     text_size: self.size
                     font_size: 0.3*self.parent.height
 
-
-            BoxLayout:
+            ScrollView:
                 size_hint: 1, .9
-                padding: 10
-                spacing: 5
-                orientation: 'vertical'
-                TexFnt:
-                    text: root.sprechen()
-                    halign: 'center'
-                    valign: 'top'
-                    text_size: self.size
-                    font_size: 0.8*drgudrunrefer.font_size
+                BoxLayout:
+                    padding: 10
+                    spacing: 5
+                    orientation: 'vertical'
+                    size_hint_y:None
+                    height:self.parent.height*1.2
+                    TexFnt:
+                        text: root.sprechen()
+                        halign: 'center'
+                        valign: 'top'
+                        text_size: self.size
+                        font_size: 0.8*drgudrunrefer.font_size
 
 
 
