@@ -1,0 +1,54 @@
+<TexFnt@Label>:
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    color: (0.18, 0.25, 0.35, 1)
+
+<ImgCenter@Image>:
+    y: self.parent.y + (self.parent.height - self.height)/2
+    x: self.parent.x + (self.parent.width - self.width)/2
+    size: (0.6* self.parent.width, 0.6*self.parent.height)
+
+<Page@Label>:
+    padding: 20, 15
+    halign: 'left'
+    valign: 'middle'
+    text_size: self.size
+    size_hint: 1, .12
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    font_size: .03*self.parent.height
+    color: (0.18, 0.25, 0.35, 1)
+
+
+<ContainerLabel@BoxLayout>:
+    padding: 20
+    spacing: 20
+    orientation: 'vertical'
+    color: 1,1,1,1 # <-----------
+    canvas.before:
+        Color:
+            rgba: (0.87, 0.93, 1.0, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [25,25,0,0]
+
+
+<AbtLabel@BoxLayout>:
+    size_hint: 1, .4
+    padding: 10
+    spacing: 10
+    orientation: 'horizontal'
+    color: 1,1,1,1
+    canvas.before:
+        Color:
+            rgba: (0.87, 0.93, 1.0, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+
+<MenuItem@BoxLayout>:
+    padding: 0
+    spacing: 0
+    orientation: 'vertical'

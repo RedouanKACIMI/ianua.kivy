@@ -1,6 +1,7 @@
 ShotManager:
     IntroShot:
     MenuShot:
+    MenShot:
 
 <IntroShot>:
     name: "intro"
@@ -11,13 +12,12 @@ ShotManager:
         padding: 50
         spacing: 10
         Image:
-            source: 'pic/2.png'
-        SrkButton:
-            text: "Hallo"
-            back_color: .12, .56, 1, 1
-            font_size: 40
+            source: 'pic/1.png'
+        BlauButton:
+            text: "OPEN"
+            font_size: 30
             height: 50
-            size_hint: .5, None
+            size_hint: .8, None
             pos_hint: {'center_x': .5}
             on_release:
                 app.root.current = "menu"
@@ -26,29 +26,180 @@ ShotManager:
 
 <MenuShot>:
     name: "menu"
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Home"
+        #<---------
+        ContainerLabel:
+            #////Hier beginnt Content\\\\
+            AbtLabel:
+                Image:
+                    source: 'pic/1.png'
+                    size_hint: .5, 1
+                    #size: (0.5* self.parent.width, 0.5*self.parent.height)
+                TexFnt:
+                    text: 'Welcome to ianua, \nthe platform for \nmanaging your \ndormitory.'
+                    font_size: .12*self.parent.height
+
+
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 20
+                GridLayout:
+                    size_hint: 1, .66
+                    cols:3
+                    padding: 0
+                    spacing: 20
+                    MenuItem:
+                        MenuButton:
+                            on_release:
+                                app.root.current = "men"
+                            ImgCenter:
+                                source: 'iko/menu/profil.png'
+                        TexFnt:
+                            text: 'Profil'
+                            size_hint: 1, .002*self.parent.width
+                    MenuItem:
+                        MenuButton:
+                            ImgCenter:
+                                source: 'iko/menu/biblio.png'
+                        TexFnt:
+                            text: 'Biblio'
+                            size_hint: 1, .002*self.parent.width
+                    MenuItem:
+                        MenuButton:
+                            ImgCenter:
+                                source: 'iko/menu/wasch.png'
+                        TexFnt:
+                            text: 'Waschen'
+                            size_hint: 1, .002*self.parent.width
+                    MenuItem:
+                        MenuButton:
+                            ImgCenter:
+                                source: 'iko/menu/sprechstd.png'
+                        TexFnt:
+                            text: 'Sprechstd'
+                            size_hint: 1, .002*self.parent.width
+                    MenuItem:
+                        MenuButton:
+                            ImgCenter:
+                                source: 'iko/menu/fund.png'
+                        TexFnt:
+                            text: 'Fundstelle'
+                            size_hint: 1, .002*self.parent.width
+                    MenuItem:
+                        MenuButton:
+                            ImgCenter:
+                                source: 'iko/menu/parkpl.png'
+                        TexFnt:
+                            text: 'Parkpl.'
+                            size_hint: 1, .002*self.parent.width
+                #------------------------------
+                GridLayout:
+                    size_hint: 1, .33
+                    cols:2
+                    padding:0
+                    spacing: 20
+                    MenuItem:
+                        size_hint_x: 0.48
+                        MenuButton:
+                            ImgCenter:
+                                source: 'iko/menu/gastzim.png'
+                        TexFnt:
+                            id : gastrefer
+                            text: 'GastZim.'
+                            size_hint: 1, .002*self.parent.width
+                    MenuItem:
+                        MenuButton:
+                            ImgCenter:
+                                source: 'iko/menu/event.png'
+                        TexFnt:
+                            text: 'Events'
+                            size_hint: 1, .002*gastrefer.width
+                            #font_size: .1*gastrefer.width
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #<---------Footer
+        BoxLayout:
+            size_hint: 1, .1
+            padding: 0
+            spacing: 1
+            orientation: 'horizontal'
+            FooterButton:
+                id: 'home'
+                text: 'Home'
+                bold: True
+                font_name: 'fonts/ITC_Bold.otf'
+            Footer2Button:
+                id: 'tel'
+                Image:
+                    source: 'iko/menu/kontakt.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)
+            Footer2Button:
+                id: 'Notif'
+                Image:
+                    source: 'iko/menu/flash.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)
+            Footer2Button:
+                id: 'Setti'
+                Image:
+                    source: 'iko/menu/settings.png'
+                    y: self.parent.y + (self.parent.height - self.height)/2
+                    x: self.parent.x + (self.parent.width - self.width)/2
+                    size: (0.5* self.parent.width, 0.5*self.parent.height)
+
+
+
+
+#<---------------------------------------- Keepin -----------------------
+
+<MenShot>:
+    name: "men"
 
     BoxLayout:
         background_color: 1, 1, 1, 1
         orientation: 'vertical'
 
+
         Image:
             source: 'pic/3.png'
         GridLayout:
             cols: 3
-            padding:20
-            spacing: 10
+            padding: 27
+            spacing: 27
             # <--------
-            Csm1Button:
+            Rnd2Button:
                 id: profil
-                back_color: (.12, .56, 1, 1)
+                back_color: (1,1,1,1)
                 on_release:
                     app.root.current = "intro"
-                Image:
-                    source: 'iko/iko1.png'
-                    y: self.parent.y + (self.parent.height - self.height)/2
-                    x: self.parent.x + (self.parent.width - self.width)/2
-                    size: (0.7* self.parent.width, 0.7*self.parent.height)
+                Label:
+                    text: 'tesst'
             NrmButton:
+                text: 'tesst'
                 Image:
                     source: 'iko/iko2.png'
                     y: self.parent.y + (self.parent.height - self.height)/2
