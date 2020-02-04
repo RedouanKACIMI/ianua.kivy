@@ -1,0 +1,30 @@
+<Blnk2Shot>:
+    name: "blnk2"
+    show: showw
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Blank"
+        #<---------
+        ContainerLabel:
+            BoxLayout:
+                Label:
+                    id: showw
+                    pos_hint:{"x": 0.1, "top":0.9}
+                    size_hint:0.8, 0.2
+                    text: "ktebti: "
+            DarkButton:
+                size_hint: 1, None
+                text: 'Retour'
+                on_press:
+                    app.root.current = 'blnk'
+
+
+
+
+        #<---------Footer
+        FooterBox:

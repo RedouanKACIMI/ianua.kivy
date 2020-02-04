@@ -1,0 +1,42 @@
+<BuchShot>:
+    name: "buch"
+    buchBox: buchBox
+    buchname: buchname
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Bibliothek Buch:"
+        #<---------
+        ContainerLabel:
+            padding: 0
+            spacing: 0
+            TexFnt:
+                id : buchname
+                padding: 20, 10
+                size_hint: 1, None
+                font_size: .07*self.parent.width
+                halign: 'left'
+                valign: 'top'
+                size: self.size
+                text: 'kochen fuer anfanger'
+            WContainerLabel:
+                BoxLayout:
+                    size_hint: 1, .8
+                    id : buchBox
+                DarkButton:
+                    size_hint: .6, None
+                    pos_hint: {'center_x': .5}
+                    on_release:
+                        app.root.current = "biblio1"
+                    text: 'Zurueck'
+
+
+
+
+
+        #<---------Footer
+        FooterBox:

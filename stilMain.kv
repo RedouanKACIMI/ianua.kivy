@@ -3,6 +3,10 @@ ShotManager:
     MenuShot:
     SprechShot:
     BlnkShot:
+    Blnk2Shot
+    Biblio1Shot:
+    Biblio2Shot:
+    BuchShot:
 
 
 <IntroShot>:
@@ -59,6 +63,8 @@ ShotManager:
                     spacing: 20
                     MenuItem:
                         MenuButton:
+                            on_release:
+                                app.root.current = "blnk"
                             ImgCenter:
                                 source: 'iko/menu/profil.png'
                         TexFnt:
@@ -66,6 +72,9 @@ ShotManager:
                             size_hint: 1, .002*self.parent.width
                     MenuItem:
                         MenuButton:
+                            on_release:
+                                app.root.current = "biblio1"
+                                root.manager.transition.direction = "up"
                             ImgCenter:
                                 source: 'iko/menu/biblio.png'
                         TexFnt:

@@ -14,14 +14,45 @@
     background_color: (0,0,0,0)
     background_normal: ''
     back_color: (0.12, 0.56, 1.0, 1)
-    border_radius: [18]
     canvas.before:
         Color:
             rgba: self.back_color
         RoundedRectangle:
             size: self.size
             pos: self.pos
-            radius: self.border_radius
+            radius: [18]
+
+
+<DarkButton@Button>:
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.25, 0.32, 0.41, 1)
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [20]
+
+
+<WeissButton@Button>:
+    markup: True
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (1,1,1,1)
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [18]
+
 
 <MenuButton@Button>:
     background_color: (0,0,0,0)

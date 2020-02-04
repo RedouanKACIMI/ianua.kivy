@@ -1,0 +1,54 @@
+<Biblio1Shot>:
+    suchbuchfeld: suchbuchfeld
+    name: "biblio1"
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Bibliothek"
+        #<---------
+        BoxLayout:
+            padding: 20
+            spacing: 20
+            orientation: 'vertical'
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 10, 10
+                spacing: 5
+                TexFnt:
+                    padding: 20, 0
+                    size_hint: 1, .2
+                    text: 'Buch Suchen:'
+                    font_size: .1*self.parent.width
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                SuchFeld:
+                    id: suchbuchfeld
+                    padding: 20 , 15
+                    hint_text: 'Name, Autor, ISBN...'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint: 1, .15
+                DarkButton:
+                    id: suchbuchbtn
+                    on_press: root.buchbtn()
+                    size_hint: 1, .15
+                    text: 'GO'
+            TexFnt:
+                padding: 10, 10
+                spacing: 10
+                halign: 'left'
+                valign: 'bottom'
+                text_size: self.size
+                text: 'Etwas Beschreibung \nhier waere eigentlich \nuch schoen sonst es ist \nkein roblem ehrlich \ngesagt nur wenn man \nnichts machen wuerde.'
+
+
+
+
+        #<---------Footer
+        FooterBox:

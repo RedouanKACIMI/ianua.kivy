@@ -19,6 +19,15 @@
     font_size: .03*self.parent.height
     color: (0.18, 0.25, 0.35, 1)
 
+<TexFntB@Label>:
+    halign: 'left'
+    valign: 'top'
+    text_size: self.size
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    color: (0.18, 0.25, 0.35, 1)
+
+
 
 <ContainerLabel@BoxLayout>:
     padding: 20
@@ -28,6 +37,20 @@
     canvas.before:
         Color:
             rgba: (0.87, 0.93, 1.0, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [25,25,0,0]
+
+
+<WContainerLabel@BoxLayout>:
+    padding: 40
+    spacing: 10
+    orientation: 'vertical'
+    color: 1,1,1,1 # <-----------
+    canvas.before:
+        Color:
+            rgba: (1,1,1, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
@@ -48,7 +71,75 @@
             size: self.size
             radius: [10]
 
+<WeissLabel@BoxLayout>:
+    size_hint: 1, .4
+    padding: 5
+    spacing: 10
+    orientation: 'horizontal'
+    color: 1,1,1,1
+    canvas.before:
+        Color:
+            rgba: (1,1,1, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+
 <MenuItem@BoxLayout>:
     padding: 0
     spacing: 0
     orientation: 'vertical'
+
+<SuchFeld@TextInput>:
+    multiline: False
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.25, 0.32, 0.41, 1)
+    border_radius: 20
+    color: self.back_color
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        Line:
+            rounded_rectangle: (self.pos[0], self.pos[1], self.size[0], self.size[1], self.border_radius)
+            width: 1.2
+
+<BiblioBox@BoxLayout>:
+
+<FooterBox@BoxLayout>:
+    size_hint: 1, .1
+    padding: 0
+    spacing: 1
+    orientation: 'horizontal'
+    Footer2Button:
+        id: 'home'
+        text: '[color=1E90FF]HOME[/color]'
+        markup: True
+        bold: True
+        font_name: 'fonts/ITC_Bold.otf'
+        on_release:
+            app.root.current = "menu"
+    Footer2Button:
+        id: 'tel'
+        Image:
+            source: 'iko/menu/kontakt.png'
+            y: self.parent.y + (self.parent.height - self.height)/2
+            x: self.parent.x + (self.parent.width - self.width)/2
+            size: (0.5* self.parent.width, 0.5*self.parent.height)
+    Footer2Button:
+        id: 'Notif'
+        Image:
+            source: 'iko/menu/flash.png'
+            y: self.parent.y + (self.parent.height - self.height)/2
+            x: self.parent.x + (self.parent.width - self.width)/2
+            size: (0.5* self.parent.width, 0.5*self.parent.height)
+    Footer2Button:
+        id: 'Setti'
+        Image:
+            source: 'iko/menu/settings.png'
+            y: self.parent.y + (self.parent.height - self.height)/2
+            x: self.parent.x + (self.parent.width - self.width)/2
+            size: (0.5* self.parent.width, 0.5*self.parent.height)
+

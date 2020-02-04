@@ -1,5 +1,6 @@
 <BlnkShot>:
     name: "blnk"
+    submit: submito
     BoxLayout:
         padding: 0
         spacing: 0
@@ -7,55 +8,22 @@
         orientation: 'vertical'
         #<---------
         Page:
-            text: "Sprechstunde"
+            text: "Blank"
         #<---------
         ContainerLabel:
-            #////Hier beginnt Content\\\\
+            TextInput:
+                id: submito
+                font_size: (root.width**2 + root.height**2) / 13**4
+                multiline: False
+            DarkButton:
+                text: 'send'
+                #on_press:
+                on_release:
+                    root.manager.transition.direction = "up"
+                    root.send()
 
-            ScrollView:
-                BoxLayout:
-                    size_hint_y:None
-                    height:root.height * 1.5
-                    orientation:'vertical'
-                    Button:
-                        text:'1'
-                    Button:
-                        text:'2'
-                    Button:
-                        text:'3'
 
-            #////Hier beginnt Content\\\\
 
 
         #<---------Footer
-        BoxLayout:
-            size_hint: 1, .1
-            padding: 0
-            spacing: 1
-            orientation: 'horizontal'
-            FooterButton:
-                id: 'home'
-                text: 'Home'
-                bold: True
-                font_name: 'fonts/ITC_Bold.otf'
-            Footer2Button:
-                id: 'tel'
-                Image:
-                    source: 'iko/menu/kontakt.png'
-                    y: self.parent.y + (self.parent.height - self.height)/2
-                    x: self.parent.x + (self.parent.width - self.width)/2
-                    size: (0.5* self.parent.width, 0.5*self.parent.height)
-            Footer2Button:
-                id: 'Notif'
-                Image:
-                    source: 'iko/menu/flash.png'
-                    y: self.parent.y + (self.parent.height - self.height)/2
-                    x: self.parent.x + (self.parent.width - self.width)/2
-                    size: (0.5* self.parent.width, 0.5*self.parent.height)
-            Footer2Button:
-                id: 'Setti'
-                Image:
-                    source: 'iko/menu/settings.png'
-                    y: self.parent.y + (self.parent.height - self.height)/2
-                    x: self.parent.x + (self.parent.width - self.width)/2
-                    size: (0.5* self.parent.width, 0.5*self.parent.height)
+        FooterBox:
