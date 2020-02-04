@@ -1,3 +1,111 @@
+<Biblio1Shot>:
+    suchbuchfeld: suchbuchfeld
+    name: "biblio1"
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Bibliothek"
+        #<---------
+        BoxLayout:
+            padding: 20
+            spacing: 20
+            orientation: 'vertical'
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 10, 10
+                spacing: 5
+                TexFnt:
+                    padding: 20, 0
+                    size_hint: 1, .4
+                    text: 'Buch Suchen:'
+                    font_size: .09*self.parent.width
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                SuchFeld:
+                    id: suchbuchfeld
+                    padding: 20 , 5
+                    hint_text: 'Name, Autor, ISBN...'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    size_hint: 1, .4
+                DarkButton:
+                    id: suchbuchbtn
+                    on_press: root.buchbtn()
+                    size_hint: 1, .4
+                    text: 'GO'
+            TexFnt:
+                padding: 10, 10
+                spacing: 10
+                halign: 'left'
+                valign: 'bottom'
+                text_size: self.size
+                text: 'Etwas Beschreibung \nhier waere eigentlich \nuch schoen sonst es ist \nkein roblem ehrlich \ngesagt nur wenn man \nnichts machen wuerde.'
+
+        #<---------Footer
+        FooterBox:
+
+<Biblio2Shot>:
+    name: "biblio2"
+    bibliobox: bibliobox
+    locsuchbuchfeld: locsuchbuchfeld
+    #pagin: pagin
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Bibliothek"
+        #<---------
+        BoxLayout:
+            size_hint: 1, .3
+            orientation: 'vertical'
+            padding: 10, 10
+            spacing: 10
+            TexFnt:
+                padding: 20, 0
+                size_hint: 1, .5
+                text: 'Buch Suchen:'
+                font_size: .3*self.parent.height
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+            BoxLayout:
+                size_hint: 1, .7
+                orientation: 'horizontal'
+                spacing: 10
+                padding: 10, 0
+                SuchFeld:
+                    id: locsuchbuchfeld
+                    padding: 10 , 4
+                    hint_text: 'Name, Autor, ISBN...'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    #size_hint: .7, 1
+                    border_radius: 15
+                DarkButton:
+                    id: locsuchbuchbtn
+                    on_press: root.locbuchbtn()
+                    size_hint: .3, 1
+                    text: 'GO'
+        ContainerLabel:
+            BiblioBox:
+                id: bibliobox
+                padding: 10,
+                spacing: 15
+                orientation: 'vertical'
+
+        #<---------Footer
+        FooterBox:
+
 <BuchShot>:
     name: "buch"
     buchBox: buchBox
@@ -17,7 +125,7 @@
             TexFnt:
                 id : buchname
                 padding: 20, 10
-                size_hint: 1, None
+                size_hint: 1, .3
                 font_size: .07*self.parent.width
                 halign: 'left'
                 valign: 'top'
@@ -28,7 +136,7 @@
                     size_hint: 1, .8
                     id : buchBox
                 DarkButton:
-                    size_hint: .6, None
+                    size_hint: .6, .2
                     pos_hint: {'center_x': .5}
                     on_release:
                         app.root.current = "biblio1"

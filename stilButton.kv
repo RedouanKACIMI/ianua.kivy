@@ -35,7 +35,7 @@
         RoundedRectangle:
             size: self.size
             pos: self.pos
-            radius: [20]
+            radius: [18]
 
 
 <WeissButton@Button>:
@@ -68,6 +68,33 @@
 
 
 
+<BlauKapsel@Button>:
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.12, 0.56, 1.0, 1)
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [10]
+
+<DarkKapsel@Button>:
+    bold: True
+    font_name: 'fonts/ITC_Bold.otf'
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (0.25, 0.32, 0.41, 1)
+    canvas.before:
+        Color:
+            rgba: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [10]
 
 
 

@@ -1,0 +1,103 @@
+<WaschShot>:
+    name: "wasch"
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Waschkueche"
+        #<---------
+        ContainerLabel:
+            WeissButton:
+                text: "[color=2D4059]Waschmachine 3[/color]"
+                on_press: root.washbtn3()
+            WeissButton:
+                text: "[color=2D4059]Waschmachine 2[/color]"
+                on_press: root.washbtn2()
+            DarkButton:
+                text: 'Trockner 1'
+                on_press: root.washbtn1()
+
+
+        #<---------Footer
+        FooterBox:
+
+<Wasch2Shot>:
+    name: "wasch2"
+    rowwasch1: rowwasch1
+    rowwasch2: rowwasch2
+    rowwasch3: rowwasch3
+    waschdat0: waschdat0
+    waschdat1: waschdat1
+    waschdat2: waschdat2
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Waschkueche"
+        #<---------
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 10
+            spacing: 5
+            size_hint: 1, .1
+            TexFnt:
+                id: waschdat0
+            TexFnt:
+                id: waschdat1
+            TexFnt:
+                id: waschdat2
+        ContainerLabel:
+            orientation: 'horizontal'
+            spacing: 5
+            padding: 10
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 5
+                id: rowwasch1
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 5
+                id: rowwasch2
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 5
+                id: rowwasch3
+
+
+        #<---------Footer
+        FooterBox:
+
+
+<Wasch3Shot>:
+    name: "wasch3"
+    waschbeschreibung: waschbeschreibung
+    BoxLayout:
+        padding: 0
+        spacing: 0
+        background_color: 1, 1, 1, 1
+        orientation: 'vertical'
+        #<---------
+        Page:
+            text: "Blank"
+        #<---------
+        ContainerLabel:
+            AbtLabel:
+                Image:
+                    source: 'iko/menu/wasch.png'
+                    size_hint: .5, 1
+                TexFnt:
+                    id: waschbeschreibung
+                    font_size: .2*self.parent.height
+            BoxLayout:
+
+
+
+
+        #<---------Footer
+        FooterBox:

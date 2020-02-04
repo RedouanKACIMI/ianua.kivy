@@ -1,4 +1,6 @@
 import kivy
+import datetime
+import mysql.connector
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -7,11 +9,12 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
 from kivy.properties import ObjectProperty
-import mysql.connector
 from kivy.base import runTouchApp
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from functools import partial
+
+kivy.config.Config.set('graphics','resizable', False)
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -52,9 +55,9 @@ class SprechShot(Screen):
 
 
 
-#################################
-biblio2_list = '''<BiblioBox@BoxLayout>:
-    text: "0 Result"'''
+# #################################
+# biblio2_list = '''<BiblioBox@BoxLayout>:
+#     text: "0 Result"'''
 
 
 class Biblio1Shot(Screen):
@@ -83,36 +86,41 @@ class Biblio2Shot(Screen):
     suchbuch = ""
 
     def fetchsql(self, suchn, boxn):
+        if len(suchn) != 0:
+            #Buecher im Regal
+            papier = mydb.cursor()
+            sqla="SELECT * FROM bibliothek WHERE XyX LIKE %s"
+            prozess = ('buch', 'autor', 'ISBN', 'verlag')
+            suche = ('%'+suchn+'%',)
+            regal = []
+            for prz in prozess:
+                sqla = sqla.replace("XyX", prz)
+                sql = (sqla)
+                papier.execute(sql, suche)
+                sqla = sqla.replace(prz, "XyX")
+                reg = papier.fetchall()
+                regal += reg
 
-        #Buecher im Regal
-        papier = mydb.cursor()
-        sqla="SELECT * FROM bibliothek WHERE XyX LIKE %s"
-        prozess = ('buch', 'autor', 'ISBN', 'verlag')
-        suche = ('%'+suchn+'%',)
-        regal = []
-        for prz in prozess:
-            sqla = sqla.replace("XyX", prz)
-            sql = (sqla)
-            papier.execute(sql, suche)
-            sqla = sqla.replace(prz, "XyX")
-            reg = papier.fetchall()
-            regal += reg
 
+            # Buecher soertieren
+            boxn.clear_widgets()
+            buchi= ''
+            for x in regal:
+                if len(x[1])  >= 15:
+                    buech = x[1][0:16]+".."
+                else:
+                    buech = x[1]
+                buchtbtncont = '''WeissButton:
+        size_hint: 1, .1
+        pos_hint: {"center_x": .5}
+        text:"[color=2D4059]''' + buech + '''[/color]"
+        #on_press: root.buchmesse()
+    '''
 
-        # Buecher soertieren
-        boxn.clear_widgets()
-        buchi= ''
-        for x in regal:
-            buchtbtncont = '''WeissButton:
-    text:"[color=2D4059]''' + x[1] + '''[/color]"
-    #on_press: root.buchmesse()
-'''
-
-            buchbtn = Builder.load_string(buchtbtncont)
-            buchbtn.bind(on_press = partial( self.buchmesse, x[0]))
-            boxn.add_widget(buchbtn)
-            buchi += buchtbtncont
-        print(buchi)
+                buchbtn = Builder.load_string(buchtbtncont)
+                buchbtn.bind(on_press = partial( self.buchmesse, x[0]))
+                boxn.add_widget(buchbtn)
+                buchi += buchtbtncont
 
     def on_enter(self, *args):
         self.fetchsql(self.suchbuch.lower(), self.bibliobox)
@@ -139,15 +147,15 @@ class BuchShot(Screen):
         zeilen = zeil.fetchall()
         zlln=zeilen[0]
         if zlln[5] == True:
-            verfugstand = "Ausgeliehen"
+            verfugstand = "gebucht"
         else:
-            verfugstand = "Verfuegbar"
+            verfugstand = "Ja"
         self.buchname.text = zlln[1]
         self.buchBox.clear_widgets()
         karte = """BoxLayout:
     orientation: 'vertical'
-    padding: 20
-    spacing: 20
+    padding: 20, 0
+    spacing: 5
     TexFntB:
         text: 'ISBN: """+str(zlln[2])+"""'
     TexFntB:
@@ -155,14 +163,94 @@ class BuchShot(Screen):
     TexFntB:
         text: 'Autor: """+zlln[4].capitalize()+"""'
     TexFntB:
-        text: 'Verfuegber: """+ verfugstand +"""'
+        text: 'Stand: """+ verfugstand +"""'
     TexFntB:
-        text: 'Bei: Zimmer"""+str(zlln[6])+"""'"""
+        text: 'Bei: Zim. """+str(zlln[6])+"""'"""
         print(karte)
         karde = Builder.load_string(karte)
         self.buchBox.add_widget(karde)
 
-###########################################################################################################################
+
+class WaschShot(Screen):
+    def washbtn3(self):
+        Wasch2Shot.geraete = 3
+        sm.current = "wasch2"
+    def washbtn2(self):
+        Wasch2Shot.geraete = 2
+        sm.current = "wasch2"
+    def washbtn1(self):
+        Wasch2Shot.geraete = 1
+        sm.current = "wasch2"
+
+
+class Wasch2Shot(Screen):
+    rowwasch1 = ObjectProperty(None)
+    rowwasch2 = ObjectProperty(None)
+    rowwasch3 = ObjectProperty(None)
+    waschdat0 = ObjectProperty(None)
+    waschdat1 = ObjectProperty(None)
+    waschdat2 = ObjectProperty(None)
+    geraete = ""
+
+    def checkin_frei(self, zeits, rowzeit):
+        spueler = mydb.cursor()
+        sequl = ("SELECT * FROM waschkueche WHERE datum = %s AND gerete = %s AND zeit = %s ")
+        self.waschdatum = datetime.date.today() + datetime.timedelta(days=rowzeit)
+        self.waschdatumform = str(self.waschdatum.day)+"."+str(self.waschdatum.month)+"."
+        koordin = (self.waschdatum, self.geraete, zeits)
+        spueler.execute(sequl, koordin)
+        wasser = spueler.fetchall()
+        if wasser == []:
+            zinum = "Frei"
+        else:
+            zinum = str(wasser[-1][5])
+        return zinum
+
+    def wascherow(self, wascheroww, rowwasch):
+        rowwasch.clear_widgets()
+        for wass in range(1, 14):
+            schichtstand = self.checkin_frei(wass, wascheroww)
+            if schichtstand == "Frei":
+                schichtcolor = "Blau"
+            else:
+                schichtcolor = "Dark"
+            schicht = schichtcolor+'''Kapsel:
+                    pos_hint: {"center_x": .5}
+                    text:"'''+schichtstand+'''"
+                '''
+            wasch_eintrag = (wass, self.waschdatumform, self.geraete)
+            sschicht= Builder.load_string(schicht)
+            if schichtstand == "Frei": sschicht.bind(on_press=partial(self.wasch_eintragen, wasch_eintrag))
+            rowwasch.add_widget(sschicht)
+        if wascheroww==0: self.waschdat0.text = self.waschdatumform
+        if wascheroww==1: self.waschdat1.text = self.waschdatumform
+        if wascheroww==2: self.waschdat2.text = self.waschdatumform
+
+    def on_enter(self, *args):
+        self.wascherow(0, self.rowwasch1)
+        self.wascherow(1, self.rowwasch2)
+        self.wascherow(2, self.rowwasch3)
+
+    def wasch_eintragen(self, *wasch_eintragarg):
+        Wasch3Shot.wasch_eintragt = wasch_eintragarg
+        sm.current = "wasch3"
+
+
+class Wasch3Shot(Screen):
+    waschbeschreibung = ObjectProperty(None)
+    wasch_eintragt = ""
+    def on_enter(self, *args):
+        print(self.wasch_eintragt)
+        self.waschbeschreibung.text = "Geraete: "+ str(self.wasch_eintragt[0][2])+"\n"+str(self.wasch_eintragt[0][1])+"\nZeit: "+str(self.wasch_eintragt[0][0])
+
+
+
+
+
+
+
+
+######################################################################################################################
 
 class BlnkShot(Screen):
     submit = ObjectProperty(None)
@@ -194,9 +282,8 @@ class ShotManager(ScreenManager):
 kv = Builder.load_file("stilButton.kv")
 kv = Builder.load_file("stilLabel.kv")
 kv = Builder.load_file("stilSprech.kv")
-kv = Builder.load_file("stilBiblio1.kv")
-kv = Builder.load_file("stilBiblio2.kv")
 kv = Builder.load_file("stilBuch.kv")
+kv = Builder.load_file("stilWasch.kv")
 kv = Builder.load_file("stilBlank.kv")
 kv = Builder.load_file("stilBlank2.kv")
 kv = Builder.load_file("stilMain.kv")
@@ -212,14 +299,19 @@ screens = [IntroShot(name="intro"),
            Biblio2Shot(name="biblio2"),
            BlnkShot(name="blnk"),
            Blnk2Shot(name="blnk2"),
-           BuchShot(name="buch")]
+           BuchShot(name="buch"),
+           SprechShot(name="sprech"),
+           WaschShot(name="wasch"),
+           Wasch2Shot(name="wasch2"),
+           Wasch3Shot(name="wasch3")]
 for screen in screens:
     sm.add_widget(screen)
 
-sm.current = "intro"
+sm.current = "wasch"
 
 class IanuaApp(App):
     def build(self):
+        Window.size = (216, 384)
         return sm
 
 

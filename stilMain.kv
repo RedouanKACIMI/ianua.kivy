@@ -7,7 +7,9 @@ ShotManager:
     Biblio1Shot:
     Biblio2Shot:
     BuchShot:
-
+    WaschShot:
+    Wasch2Shot:
+    Wasch3Shot:
 
 <IntroShot>:
     name: "intro"
@@ -82,6 +84,9 @@ ShotManager:
                             size_hint: 1, .002*self.parent.width
                     MenuItem:
                         MenuButton:
+                            on_release:
+                                app.root.current = "wasch"
+                                root.manager.transition.direction = "up"
                             ImgCenter:
                                 source: 'iko/menu/wasch.png'
                         TexFnt:
