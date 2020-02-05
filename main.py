@@ -105,6 +105,8 @@ class Biblio1Shot(Screen):
         pop = Popup(title='Leere Input', content=Label(text='Sie haben\nnix geschrieben.'), size_hint=(.7, .5))
         pop.open()
 
+    def on_leave(self, *args):
+        self.suchbuchfeld.text = ""
 
 class Biblio2Shot(Screen):
     bibliobox = ObjectProperty(None)
@@ -148,9 +150,16 @@ class Biblio2Shot(Screen):
                 buchbtn.bind(on_press = partial( self.buchmesse, x[0]))
                 boxn.add_widget(buchbtn)
                 buchi += buchtbtncont
-
+            if regal == []:
+                pup = Popup(title='Oh pech',
+                        content=Label(text='Das haben wir\nleider nicht.'),
+                        size_hint=(.7, .5))
+                pup.open()
     def on_enter(self, *args):
         self.fetchsql(self.suchbuch.lower(), self.bibliobox)
+
+    def on_leave(self, *args):
+        self.locsuchbuchfeld.text = ""
 
     def locbuchbtn(self):
         self.fetchsql(self.locsuchbuchfeld.text.lower(), self.bibliobox)
@@ -193,7 +202,6 @@ class BuchShot(Screen):
         text: 'Stand: """+ verfugstand +"""'
     TexFntB:
         text: 'Bei: Zim. """+str(zlln[6])+"""'"""
-        print(karte)
         karde = Builder.load_string(karte)
         self.buchBox.add_widget(karde)
 
@@ -277,10 +285,9 @@ class Wasch3Shot(Screen):
 
     def on_enter(self, *args):
         self.waschbeschreibung.text = geretnamin(self.wasch_eintragt[0][2])+" "+ str(self.wasch_eintragt[0][2])+"\n"+str(self.wasch_eintragt[0][1])+"\nZeit: "+getwaschzeit(str(self.wasch_eintragt[0][0]))
-        #print(getwaschzeit(str(self.wasch_eintragt[0][0])))
+
     def waschsubmit(self):
         if self.waschbewohner.text != "" or self.waschzinum.text != "":
-            print(type(self.waschzinum.text))
             if self.waschzinum.text.isdigit():
                 waschkleidung = ianuadb.cursor()
                 sqlk = "INSERT INTO waschkueche (datum, gerete, zeit, bewohner, zimm) VALUES (%s, %s, %s, %s, %s)"
@@ -371,11 +378,11 @@ screens = [IntroShot(name="intro"),
 for screen in screens:
     sm.add_widget(screen)
 
-sm.current = "wasch"
+sm.current = "menu"
 
 class IanuaApp(App):
     def build(self):
-        Window.size = (216, 384)
+        Window.size = (432, 768)
         return sm
 
 
