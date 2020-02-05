@@ -1,5 +1,6 @@
 import kivy
 import datetime
+import time
 import mysql.connector
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -16,7 +17,7 @@ from functools import partial
 
 kivy.config.Config.set('graphics','resizable', False)
 
-mydb = mysql.connector.connect(
+ianuadb = mysql.connector.connect(
   host="localhost",
   user="root",
   passwd="",
@@ -26,12 +27,38 @@ mydb = mysql.connector.connect(
 #    SQL SELECT     #
 #####################
 
-auge = mydb.cursor()
+auge = ianuadb.cursor()
 auge.execute("SELECT * FROM sprechstd")
 sprechstden = auge.fetchall()
 
+#####################
+#     Methods       #
+#####################
 
+def geretnamin(geretnum): #wasch
+    if geretnum == 1:
+        return "Trockner"
+    else:
+        return "WaschM."
 
+def getwaschzeit(zeitin):
+    waschzeitdict = {
+        "1": "7[sup]:00[/sup]-8[sup]:15[/sup]",
+        "2": "8[sup]:15[/sup]-9[sup]:30[/sup]",
+        "3": "9[sup]:30[/sup]-10[sup]:45[/sup]",
+        "4": "10[sup]:45[/sup]-12[sup]:00[/sup]",
+        "5": "12[sup]:00[/sup]-13[sup]:15[/sup]",
+        "6": "13[sup]:15[/sup]-14[sup]:30[/sup]",
+        "7": "14[sup]:30[/sup]-15[sup]:45[/sup]",
+        "8": "15[sup]:45[/sup]-17[sup]:00[/sup]",
+        "9": "17[sup]:00[/sup]-18[sup]:15[/sup]",
+        "10": "18[sup]:15[/sup]-19[sup]:30[/sup]",
+        "11": "19[sup]:30[/sup]-20[sup]:45[/sup]",
+        "12": "20[sup]:45[/sup]-22[sup]:00[/sup]",
+        "13": "22[sup]:00[/sup]-23[sup]:15[/sup]"
+    }
+    waschzeitdict = waschzeitdict.get(zeitin, zeitin)
+    return waschzeitdict
 #####################
 #   ScreensmANAGE   #
 #####################
@@ -75,7 +102,7 @@ class Biblio1Shot(Screen):
         self.suchbuchfeld.text = ""
 
     def errorsuch(self):
-        pop = Popup(title='Leere Input', content=Label(text='Sie haben nix geschrieben.'), size_hint=(None, None), size=(400, 400))
+        pop = Popup(title='Leere Input', content=Label(text='Sie haben\nnix geschrieben.'), size_hint=(.7, .5))
         pop.open()
 
 
@@ -88,7 +115,7 @@ class Biblio2Shot(Screen):
     def fetchsql(self, suchn, boxn):
         if len(suchn) != 0:
             #Buecher im Regal
-            papier = mydb.cursor()
+            papier = ianuadb.cursor()
             sqla="SELECT * FROM bibliothek WHERE XyX LIKE %s"
             prozess = ('buch', 'autor', 'ISBN', 'verlag')
             suche = ('%'+suchn+'%',)
@@ -140,7 +167,7 @@ class BuchShot(Screen):
     blatt = ""
     def on_enter(self, *args):
         #self.show.text = "haaaa"+ self.fullin
-        zeil = mydb.cursor()
+        zeil = ianuadb.cursor()
         squl = ("SELECT * FROM bibliothek WHERE id = %s")
         succh = (self.blatt,)
         zeil.execute(squl, succh)
@@ -190,10 +217,11 @@ class Wasch2Shot(Screen):
     waschdat0 = ObjectProperty(None)
     waschdat1 = ObjectProperty(None)
     waschdat2 = ObjectProperty(None)
+    geretname = ObjectProperty(None)
     geraete = ""
 
     def checkin_frei(self, zeits, rowzeit):
-        spueler = mydb.cursor()
+        spueler = ianuadb.cursor()
         sequl = ("SELECT * FROM waschkueche WHERE datum = %s AND gerete = %s AND zeit = %s ")
         self.waschdatum = datetime.date.today() + datetime.timedelta(days=rowzeit)
         self.waschdatumform = str(self.waschdatum.day)+"."+str(self.waschdatum.month)+"."
@@ -207,7 +235,6 @@ class Wasch2Shot(Screen):
         return zinum
 
     def wascherow(self, wascheroww, rowwasch):
-        rowwasch.clear_widgets()
         for wass in range(1, 14):
             schichtstand = self.checkin_frei(wass, wascheroww)
             if schichtstand == "Frei":
@@ -218,7 +245,7 @@ class Wasch2Shot(Screen):
                     pos_hint: {"center_x": .5}
                     text:"'''+schichtstand+'''"
                 '''
-            wasch_eintrag = (wass, self.waschdatumform, self.geraete)
+            wasch_eintrag = (wass, self.waschdatumform, self.geraete, self.waschdatum)
             sschicht= Builder.load_string(schicht)
             if schichtstand == "Frei": sschicht.bind(on_press=partial(self.wasch_eintragen, wasch_eintrag))
             rowwasch.add_widget(sschicht)
@@ -227,23 +254,58 @@ class Wasch2Shot(Screen):
         if wascheroww==2: self.waschdat2.text = self.waschdatumform
 
     def on_enter(self, *args):
+        self.geretname.text = geretnamin(self.geraete)+" "+str(self.geraete)
         self.wascherow(0, self.rowwasch1)
         self.wascherow(1, self.rowwasch2)
         self.wascherow(2, self.rowwasch3)
+
+    def on_leave(self, *args):
+        self.geretname.text = ""
+        self.rowwasch1.clear_widgets()
+        self.rowwasch2.clear_widgets()
+        self.rowwasch3.clear_widgets()
 
     def wasch_eintragen(self, *wasch_eintragarg):
         Wasch3Shot.wasch_eintragt = wasch_eintragarg
         sm.current = "wasch3"
 
-
 class Wasch3Shot(Screen):
     waschbeschreibung = ObjectProperty(None)
     wasch_eintragt = ""
+    waschzinum: ObjectProperty(None)
+    waschbewohner: ObjectProperty(None)
+
     def on_enter(self, *args):
-        print(self.wasch_eintragt)
-        self.waschbeschreibung.text = "Geraete: "+ str(self.wasch_eintragt[0][2])+"\n"+str(self.wasch_eintragt[0][1])+"\nZeit: "+str(self.wasch_eintragt[0][0])
-
-
+        self.waschbeschreibung.text = geretnamin(self.wasch_eintragt[0][2])+" "+ str(self.wasch_eintragt[0][2])+"\n"+str(self.wasch_eintragt[0][1])+"\nZeit: "+getwaschzeit(str(self.wasch_eintragt[0][0]))
+        #print(getwaschzeit(str(self.wasch_eintragt[0][0])))
+    def waschsubmit(self):
+        if self.waschbewohner.text != "" or self.waschzinum.text != "":
+            print(type(self.waschzinum.text))
+            if self.waschzinum.text.isdigit():
+                waschkleidung = ianuadb.cursor()
+                sqlk = "INSERT INTO waschkueche (datum, gerete, zeit, bewohner, zimm) VALUES (%s, %s, %s, %s, %s)"
+                kleidung = (self.wasch_eintragt[0][3], self.wasch_eintragt[0][2], self.wasch_eintragt[0][0], self.waschbewohner.text, self.waschzinum.text)
+                waschkleidung.execute(sqlk, kleidung)
+                ianuadb.commit()
+                if ianuadb.is_connected():
+                    self.waschbewohner.text = ""
+                    self.waschzinum.text = ""
+                    waschkleidung.close()
+                    pip = Popup(title='Danke',
+                                content=Label(text='Gebucht!'),
+                                size_hint=(.7, .5))
+                    pip.open()
+                    sm.current = "wasch"
+            else:
+                pap = Popup(title='Entschuldigung',
+                            content=Label(text='Zi. Num. \nfalsh gegeben!'),
+                            size_hint=(.7, .5))
+                pap.open()
+        else:
+            pop = Popup(title='Entschuldigung',
+                        content=Label(text='Alle Felder\nausfuellen Bitte.'),
+                        size_hint=(.7, .5))
+            pop.open()
 
 
 
@@ -251,6 +313,8 @@ class Wasch3Shot(Screen):
 
 
 ######################################################################################################################
+
+
 
 class BlnkShot(Screen):
     submit = ObjectProperty(None)

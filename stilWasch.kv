@@ -32,6 +32,7 @@
     waschdat0: waschdat0
     waschdat1: waschdat1
     waschdat2: waschdat2
+    geretname: geretname
     BoxLayout:
         padding: 0
         spacing: 0
@@ -39,13 +40,15 @@
         orientation: 'vertical'
         #<---------
         Page:
-            text: "Waschkueche"
+            id: geretname
+            #text: "Waschkueche"
         #<---------
         BoxLayout:
             orientation: 'horizontal'
             padding: 10
             spacing: 5
             size_hint: 1, .1
+            TexFnt:
             TexFnt:
                 id: waschdat0
             TexFnt:
@@ -56,6 +59,50 @@
             orientation: 'horizontal'
             spacing: 5
             padding: 10
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 5
+                halign: 'left'
+                id: rowwasch0
+                TexFnt:
+                    markup: True
+                    text:"7[sup]:00[/sup]-8[sup]:15[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"8[sup]:15[/sup]-9[sup]:30[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"9[sup]:30[/sup]-10[sup]:45[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"10[sup]:45[/sup]-12[sup]:00[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"12[sup]:00[/sup]-13[sup]:15[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"13[sup]:15[/sup]-14[sup]:30[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"14[sup]:30[/sup]-15[sup]:45[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"15[sup]:45[/sup]-17[sup]:00[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"17[sup]:00[/sup]-18[sup]:15[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"18[sup]:15[/sup]-19[sup]:30[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"19[sup]:30[/sup]-20[sup]:45[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"20[sup]:45[/sup]-22[sup]:00[/sup]"
+                TexFnt:
+                    markup: True
+                    text:"22[sup]:00[/sup]-23[sup]:15[/sup]"
             BoxLayout:
                 orientation: 'vertical'
                 spacing: 5
@@ -77,6 +124,8 @@
 <Wasch3Shot>:
     name: "wasch3"
     waschbeschreibung: waschbeschreibung
+    waschzinum: waschzinum
+    waschbewohner:waschbewohner
     BoxLayout:
         padding: 0
         spacing: 0
@@ -88,13 +137,42 @@
         #<---------
         ContainerLabel:
             AbtLabel:
+                size_hint: 1, .5
                 Image:
                     source: 'iko/menu/wasch.png'
-                    size_hint: .5, 1
+                    size_hint: 1, 1
                 TexFnt:
                     id: waschbeschreibung
-                    font_size: .2*self.parent.height
+                    font_size: .08*self.parent.width
+                    markup: True
+            SuchFeld:
+                id: waschbewohner
+                padding: 10 , 4
+                hint_text: 'Name'
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                size_hint: 1, .15
+                border_radius: 15
             BoxLayout:
+                size_hint: 1, .15
+                orientation: 'horizontal'
+                spacing: 10
+                SuchFeld:
+                    id: waschzinum
+                    padding: 10 , 4
+                    hint_text: 'Zim Num'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    border_radius: 15
+                DarkButton:
+                    id: waschsubbtn
+                    on_release: root.waschsubmit()
+                    size_hint: .7, 1
+                    text: 'Buchen'
+            BoxLayout:
+                size_hint: 1, .2
 
 
 
