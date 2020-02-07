@@ -280,8 +280,8 @@ class Wasch2Shot(Screen):
 class Wasch3Shot(Screen):
     waschbeschreibung = ObjectProperty(None)
     wasch_eintragt = ""
-    waschzinum: ObjectProperty(None)
-    waschbewohner: ObjectProperty(None)
+    waschzinum = ObjectProperty(None)
+    waschbewohner = ObjectProperty(None)
 
     def on_enter(self, *args):
         self.waschbeschreibung.text = geretnamin(self.wasch_eintragt[0][2])+" "+ str(self.wasch_eintragt[0][2])+"\n"+str(self.wasch_eintragt[0][1])+"\nZeit: "+getwaschzeit(str(self.wasch_eintragt[0][0]))
