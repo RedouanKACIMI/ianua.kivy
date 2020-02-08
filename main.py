@@ -35,6 +35,7 @@ sprechstden = auge.fetchall()
 #     Methods       #
 #####################
 
+
 def geretnamin(geretnum): #wasch
     if geretnum == 1:
         return "Trockner"
@@ -280,8 +281,8 @@ class Wasch2Shot(Screen):
 class Wasch3Shot(Screen):
     waschbeschreibung = ObjectProperty(None)
     wasch_eintragt = ""
-    waschzinum: ObjectProperty(None)
-    waschbewohner: ObjectProperty(None)
+    waschzinum = ObjectProperty(None)
+    waschbewohner = ObjectProperty(None)
 
     def on_enter(self, *args):
         self.waschbeschreibung.text = geretnamin(self.wasch_eintragt[0][2])+" "+ str(self.wasch_eintragt[0][2])+"\n"+str(self.wasch_eintragt[0][1])+"\nZeit: "+getwaschzeit(str(self.wasch_eintragt[0][0]))
@@ -315,6 +316,8 @@ class Wasch3Shot(Screen):
             pop.open()
 
 
+class FundShot(Screen):
+    pass
 
 
 
@@ -357,6 +360,7 @@ kv = Builder.load_file("stilBuch.kv")
 kv = Builder.load_file("stilWasch.kv")
 kv = Builder.load_file("stilBlank.kv")
 kv = Builder.load_file("stilBlank2.kv")
+kv = Builder.load_file("stilFund.kv")
 kv = Builder.load_file("stilMain.kv")
 Window.clearcolor = (1, 1, 1, 1)
 
@@ -374,11 +378,12 @@ screens = [IntroShot(name="intro"),
            SprechShot(name="sprech"),
            WaschShot(name="wasch"),
            Wasch2Shot(name="wasch2"),
-           Wasch3Shot(name="wasch3")]
+           Wasch3Shot(name="wasch3"),
+           FundShot(name="fund")]
 for screen in screens:
     sm.add_widget(screen)
 
-sm.current = "menu"
+sm.current = "fund"
 
 class IanuaApp(App):
     def build(self):

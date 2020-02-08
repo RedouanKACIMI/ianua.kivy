@@ -10,6 +10,7 @@ ShotManager:
     WaschShot:
     Wasch2Shot:
     Wasch3Shot:
+    FundShot:
 
 <IntroShot>:
     name: "intro"
@@ -104,6 +105,9 @@ ShotManager:
                             size_hint: 1, .002*self.parent.width
                     MenuItem:
                         MenuButton:
+                            on_release:
+                                app.root.current = "fund"
+                                root.manager.transition.direction = "up"
                             ImgCenter:
                                 source: 'iko/menu/fund.png'
                         TexFnt:
