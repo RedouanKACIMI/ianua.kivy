@@ -1,5 +1,6 @@
 <FundShot>:
     name: "fund"
+    scrollfund : scrollfund
     BoxLayout:
         padding: 0
         spacing: 0
@@ -12,145 +13,18 @@
         ScrollView:
             size_hint: 1, .58
             BoxLayout:
+                id : scrollfund
                 size_hint_x:None
-                width:self.parent.width*4.3
+                #width:self.parent.width * 4.3
                 padding: 20
                 spacing: 15
                 orientation: 'horizontal'
-                AbtLabel:
-                    padding: 0
-                    orientation: 'vertical'
-                    size_hint: 1, 1
-                    BoxLayout:
-                        canvas:
-                            RoundedRectangle:
-                                source: 'pic/fund/1.jpeg'
-                                size: self.size
-                                pos: self.pos
-                                radius: [10, 10, 0, 0]
-                    BoxLayout:
-                        orientation: 'vertical'
-                        padding: 5
-                        TexFnt:
-                            text: "Iphone x"
-                            font_size: .08*self.parent.width
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            BoxLayout:
-                                orientation: 'vertical'
-                                padding: 20, 10
-                                halign: 'left'
-                                valign: 'bottom'
-                                TexFnt:
-                                    text_size: self.size
-                                    text : "in: A2 Kueche"
-                                TexFnt:
-                                    text_size: self.size
-                                    text : "am: 07.02.19 - 14:35"
-                                TexFnt:
-                                    text_size: self.size
-                                    text: "bei: Jan 317"
-                                TexFnt:
-                                    text_size: self.size
-                                    text: "#12"
-                            BoxLayout:
-                                size_hint: .4,1
-                                padding: 10
-                                DarkButton:
-                                    text: 'Found'
-                                    size_hint: 1, .6
-                                    pos_hint: {'center_y': .5}
 
-                AbtLabel:
-                    padding: 0
-                    orientation: 'vertical'
-                    size_hint: 1, 1
-                    BoxLayout:
-                        canvas:
-                            RoundedRectangle:
-                                source: 'pic/fund/2.jpeg'
-                                size: self.size
-                                pos: self.pos
-                                radius: [10, 10, 0, 0]
-                    BoxLayout:
-                        orientation: 'vertical'
-                        padding: 5
-                        TexFnt:
-                            text: "Buch"
-                            font_size: .08*self.parent.width
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            BoxLayout:
-                                orientation: 'vertical'
-                                padding: 20, 10
-                                halign: 'left'
-                                valign: 'bottom'
-                                TexFnt:
-                                    text_size: self.size
-                                    text : "in: A2 Kueche"
-                                TexFnt:
-                                    text_size: self.size
-                                    text : "am: 07.02.19 - 14:35"
-                                TexFnt:
-                                    text_size: self.size
-                                    text: "bei: Jan 317"
-                                TexFnt:
-                                    text_size: self.size
-                                    text: "#12"
-                            BoxLayout:
-                                size_hint: .4,1
-                                padding: 10
-                                DarkButton:
-                                    text: 'Found'
-                                    size_hint: 1, .6
-                                    pos_hint: {'center_y': .5}
-                AbtLabel:
-                    padding: 0
-                    orientation: 'vertical'
-                    size_hint: 1, 1
-                    BoxLayout:
-                        canvas:
-                            RoundedRectangle:
-                                source: 'pic/fund/3.jpeg'
-                                size: self.size
-                                pos: self.pos
-                                radius: [10, 10, 0, 0]
-                    BoxLayout:
-                        orientation: 'vertical'
-                        padding: 5
-                        TexFnt:
-                            text: "Buch"
-                            font_size: .08*self.parent.width
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            BoxLayout:
-                                orientation: 'vertical'
-                                padding: 20, 10
-                                halign: 'left'
-                                valign: 'bottom'
-                                TexFnt:
-                                    text_size: self.size
-                                    text : "in: A2 Kueche"
-                                TexFnt:
-                                    text_size: self.size
-                                    text : "am: 07.02.19 - 14:35"
-                                TexFnt:
-                                    text_size: self.size
-                                    text: "bei: Jan 317"
-                                TexFnt:
-                                    text_size: self.size
-                                    text: "#12"
-                            BoxLayout:
-                                size_hint: .4,1
-                                padding: 10
-                                DarkButton:
-                                    text: 'Found'
-                                    size_hint: 1, .6
-                                    pos_hint: {'center_y': .5}
-                AbtLabel:
-                    size_hint: 1, 1
-                AbtLabel:
-                    size_hint: 1, 1
+
+
+
+
+
         ContainerLabel:
             orientation: "horizontal"
             size_hint: 1, .2
@@ -165,6 +39,8 @@
                 pos_hint: {'center_x': .5,'center_y': .5}
                 ImgCenter:
                     source: "iko/shutter.png"
+                on_press:
+                    app.root.current = "fundcam"
             TexFnt:
                 padding: 10, 10
                 pos_hint: {'center_x': .5,'center_y': .5}

@@ -317,9 +317,99 @@ class Wasch3Shot(Screen):
 
 
 class FundShot(Screen):
-    pass
+    scrollfund = ObjectProperty(None)
+
+    def on_enter(self, *args):
+        hand = ianuadb.cursor()
+        hand.execute("SELECT * FROM fund")
+        fundbox = hand.fetchall()
+        for gefund in fundbox:
+
+            anzeigdaten = '''BoxLayout:
+	orientation: 'vertical'
+	padding: 20, 10
+	halign: 'left'
+	valign: 'bottom'
+	TexFnt:
+		text_size: self.size
+		text : "in: '''+gefund[2]+'''"
+	TexFnt:
+		text_size: self.size
+		text : "am: "
+	TexFnt:
+		text_size: self.size
+		text: "bei: '''+gefund[4]+'''"
+	TexFnt:
+		text_size: self.size
+		text: "#'''+str(gefund[0])+'''"
+'''
+
+            anzeigdatenpy = Builder.load_string(anzeigdaten)
+
+            anzeigdel = '''BoxLayout:
+    size_hint: .4,1
+    padding: 10'''
+            anzeigdelpy = Builder.load_string(anzeigdel)
+
+            anzeigbtn = '''DarkButton:
+    text: 'Found'
+    size_hint: 1, .6
+    pos_hint: {'center_y': .5}'''
+            anzeigbtnpy = Builder.load_string(anzeigbtn)
+            anzeigbtnpy.bind(on_press=partial(self.foundmd, gefund[0]))
+            anzeigdelpy.add_widget(anzeigbtnpy)
 
 
+
+            anzeigroot ='''AbtLabel:
+    padding: 0
+    orientation: 'vertical'
+    size_hint: 1, 1
+    BoxLayout:
+        canvas:
+            RoundedRectangle:
+                source: "pic/fund/'''+gefund[5]+'''"
+                size: self.size
+                pos: self.pos
+                radius: [10, 10, 0, 0]
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 5
+        TexFnt:
+            text: "'''+gefund[1]+'''"
+            font_size: .08*self.parent.width'''
+
+            anzeigop = '''BoxLayout:
+    orientation: "horizontal"'''
+            anzeigoppy = Builder.load_string(anzeigop)
+
+            anzeig = Builder.load_string(anzeigroot)
+            anzeigoppy.add_widget(anzeigdatenpy)
+            anzeigoppy.add_widget(anzeigdelpy)
+            anzeig.add_widget(anzeigoppy)
+
+            self.scrollfund.add_widget(anzeig)
+
+        self.scrollfund.width = self.parent.width*len(fundbox)*.9
+
+
+    def foundmd(self, *args):
+        fing = ianuadb.cursor()
+        sqldel = "DELETE FROM fund WHERE id = %s"
+        idtup= (args[0],)
+        fing.execute(sqldel, idtup)
+        ianuadb.commit()
+
+        deletedfund = Popup(title='Prima',
+                        content=Label(text='Fundsache\nwürde gelöscht.'),
+                        size_hint=(.7, .4))
+        deletedfund.open()
+        self.on_leave()
+        self.on_enter()
+
+
+    def on_leave(self, *args):
+        self.scrollfund.clear_widgets()
 
 
 ######################################################################################################################
