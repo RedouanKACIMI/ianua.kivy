@@ -1,6 +1,5 @@
 <Blnk2Shot>:
     name: "blnk2"
-    show: showw
     BoxLayout:
         padding: 0
         spacing: 0
@@ -8,20 +7,57 @@
         orientation: 'vertical'
         #<---------
         Page:
-            text: "Blank"
+            text: "Blank2"
         #<---------
+        BoxLayout:
+            padding: 20
+            id: capturedfund
+            AbtLabel:
+                padding: 0
+                orientation: 'vertical'
+                size_hint: 1, 1
+                BoxLayout:
+                    canvas:
+                        RoundedRectangle:
+                            source: "pic/fund/4.png"
+                            size: self.size
+                            pos: self.pos
+                            radius: [10, 10, 0, 0]
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: 5
+                    TexFnt:
+                        text: "textt"
+                        font_size: .08*self.parent.width
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        BoxLayout:
+                            orientation: 'vertical'
+                            padding: 20, 10
+                            halign: 'left'
+                            valign: 'bottom'
+                            TexFnt:
+                                text_size: self.size
+                                text : "in: fsvdfb"
+                            TexFnt:
+                                text_size: self.size
+                                text : "am: "
+                            TexFnt:
+                                text_size: self.size
+                                text: "bei: fhnd"
+                            TexFnt:
+                                text_size: self.size
+                                text: "#756"
+                        BoxLayout:
+                            size_hint: .4,1
+                            padding: 10
+                            DarkButton:
+                                text: 'Found'
+                                size_hint: 1, .6
+                                pos_hint: {'center_y': .5}
         ContainerLabel:
-            BoxLayout:
-                Label:
-                    id: showw
-                    pos_hint:{"x": 0.1, "top":0.9}
-                    size_hint:0.8, 0.2
-                    text: "ktebti: "
-            DarkButton:
-                size_hint: 1, None
-                text: 'Retour'
-                on_press:
-                    app.root.current = 'blnk'
+            size_hint: 1, .2
+
 
 
 

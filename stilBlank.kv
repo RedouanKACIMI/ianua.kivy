@@ -1,6 +1,5 @@
 <BlnkShot>:
     name: "blnk"
-    submit: submito
     BoxLayout:
         padding: 0
         spacing: 0
@@ -11,16 +10,7 @@
             text: "Blank"
         #<---------
         ContainerLabel:
-            TextInput:
-                id: submito
-                font_size: (root.width**2 + root.height**2) / 13**4
-                multiline: False
-            DarkButton:
-                text: 'send'
-                #on_press:
-                on_release:
-                    root.manager.transition.direction = "up"
-                    root.send()
+            ###########
 
 
 

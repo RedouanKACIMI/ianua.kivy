@@ -11,6 +11,8 @@ ShotManager:
     Wasch2Shot:
     Wasch3Shot:
     FundShot:
+    FundCamShot:
+    FundNeuShot:
 
 <IntroShot>:
     name: "intro"
@@ -179,6 +181,8 @@ ShotManager:
                     size: (0.5* self.parent.width, 0.5*self.parent.height)
             Footer2Button:
                 id: 'Notif'
+                on_release:
+                    app.root.current = "blnk2"
                 Image:
                     source: 'iko/menu/flash.png'
                     y: self.parent.y + (self.parent.height - self.height)/2

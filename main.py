@@ -7,13 +7,14 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from kivy.uix.button import Button
 from kivy.properties import ObjectProperty
 from kivy.base import runTouchApp
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from functools import partial
+
 
 kivy.config.Config.set('graphics','resizable', False)
 
@@ -318,7 +319,8 @@ class Wasch3Shot(Screen):
 
 class FundShot(Screen):
     scrollfund = ObjectProperty(None)
-
+    fundswitch = ObjectProperty(None)
+    camer0 = ObjectProperty(None)
     def on_enter(self, *args):
         hand = ianuadb.cursor()
         hand.execute("SELECT * FROM fund")
@@ -411,27 +413,63 @@ class FundShot(Screen):
     def on_leave(self, *args):
         self.scrollfund.clear_widgets()
 
+    def switch(self, *args):
+        sm.current = "fundcam"
+
+
+
+class FundCamShot(Screen):
+    fundcamarea = ObjectProperty(None)
+    camera0 = ObjectProperty(None)
+    def on_enter(self, *args):
+        self.camera0.play = True
+
+    def capture(self):
+        camera0py = self.ids['camera0']
+        timestr = time.strftime("%Y%m%d_%H%M%S")
+        camera0py.export_to_png("pic/fund/IMG_{}.png".format(timestr))
+        FundNeuShot.fundpicname = "IMG_{}.png".format(timestr)
+        sm.current = "fundneu"
+
+class FundNeuShot(Screen):
+    fundpicname = ""
+    capturedfund = ObjectProperty(None)
+    def on_enter(self, *args):
+        print(self.fundpicname)
+        fundpic_source = "pic/fund/{}".format(self.fundpicname)
+        fundpic_embed='''AbtLabel:
+    orientation: 'vertical'
+    size_hint: 1, 1
+    BoxLayout:
+        canvas:
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [10, 10, 0, 0]
+                source: "'''+fundpic_source+'''"'''
+
+        fundpic_embedpy=Builder.load_string(fundpic_embed)
+        self.capturedfund.add_widget(fundpic_embedpy)
+
+
+    def fundinject(self):
+        pass
+
+    def on_leave(self, *args):
+        self.capturedfund.clear_widgets()
+
+
 
 ######################################################################################################################
 
 
 
 class BlnkShot(Screen):
-    submit = ObjectProperty(None)
-    def send(self):
-        self.submit.text
-        Blnk2Shot.current = self.submit.text
-        self.reset()
-        sm.current = "blnk2"
-
-    def reset(self):
-        self.submit.text = ""
+    pass
 
 
 class Blnk2Shot(Screen):
-    show = ObjectProperty(None)
-    def on_enter(self, *args):
-        self.show.text = "haaaa"
+    pass
 #############################################################################################################################
 
 
@@ -457,7 +495,7 @@ Window.clearcolor = (1, 1, 1, 1)
 
 
 
-sm = ShotManager()
+sm = ShotManager(transition=NoTransition())
 screens = [IntroShot(name="intro"),
            MenuShot(name="menu"),
            Biblio1Shot(name="biblio1"),
@@ -469,11 +507,13 @@ screens = [IntroShot(name="intro"),
            WaschShot(name="wasch"),
            Wasch2Shot(name="wasch2"),
            Wasch3Shot(name="wasch3"),
-           FundShot(name="fund")]
+           FundShot(name="fund"),
+           FundCamShot(name="fundcam"),
+           FundNeuShot(name="fundneu")]
 for screen in screens:
     sm.add_widget(screen)
 
-sm.current = "fund"
+sm.current = "fundcam"
 
 class IanuaApp(App):
     def build(self):
