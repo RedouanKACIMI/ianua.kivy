@@ -68,17 +68,23 @@
 
 
         BoxLayout:
+            size_hint: 1, .4
             id: fundcamarea
             orientation: "vertical"
-            size_hint: 1, .7
+            #size: (self.children.width, self.children.height)
             Camera:
                 id: camera0
-                resolution: (480, 640)
+                resolution: (600, 600)
+                size: 300, 300
+                #allow_stretch: True
+                index: 0
                 play: False
-
+        TexFnt:
+            size_hint: 1, .08
+            text: "Nehmen Sie Bitte eine \nklare Foto von der Sache auf."
         ContainerLabel:
             orientation: "horizontal"
-            size_hint: 1, .2
+            size_hint: 1, .3
             TexFnt:
                 padding: 10, 10
                 pos_hint: {'center_x': .5,'center_y': .5}
@@ -103,6 +109,9 @@
 <FundNeuShot>:
     name: "fundneu"
     capturedfund: capturedfund
+    fundwasstil: fundwasstil
+    fundwostil: fundwostil
+    fundbeistil: fundbeistil
     BoxLayout:
         padding: 0
         spacing: 0
@@ -113,9 +122,12 @@
             text: "Was gefunden ?"
         #<---------
         BoxLayout:
-            padding: 20
+            size_hint: 1, .38
+            padding: 20, 0, 20, 20
             id: capturedfund
         ContainerLabel:
+            size_hint: 1, .3
+            spacing: 20
             SuchFeld:
                 id: fundwasstil
                 padding: 10 , 4
@@ -125,26 +137,29 @@
                 text_size: self.size
                 border_radius: 15
             SuchFeld:
-                id: fundwotil
+                id: fundwostil
                 padding: 10 , 4
                 hint_text: 'Wo ?'
                 halign: 'left'
                 valign: 'middle'
                 text_size: self.size
                 border_radius: 15
-            SuchFeld:
-                id: fundbeistil
-                padding: 10 , 4
-                hint_text: 'Bei wem ist es ?'
-                halign: 'left'
-                valign: 'middle'
-                text_size: self.size
-                border_radius: 15
-            DarkButton:
-                id: fundzeigstil
-                #on_release: root.waschsubmit()
-                size_hint: .7, 1
-                text: 'Zeigen'
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: 20
+                SuchFeld:
+                    id: fundbeistil
+                    padding: 10 , 4
+                    hint_text: 'Bei wem ist es ?'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    border_radius: 15
+                DarkButton:
+                    id: fundzeigstil
+                    on_release: root.fundadd()
+                    size_hint: .7, 1
+                    text: 'Zeigen'
 
 
 

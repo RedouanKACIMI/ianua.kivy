@@ -425,17 +425,21 @@ class FundCamShot(Screen):
         self.camera0.play = True
 
     def capture(self):
-        camera0py = self.ids['camera0']
+        camera0py = self.ids['fundcamarea']
         timestr = time.strftime("%Y%m%d_%H%M%S")
         camera0py.export_to_png("pic/fund/IMG_{}.png".format(timestr))
+        # outname = "pic/fund/IMG_{}.png".format(timestr)
+        # Window.screenshot(name=outname)
         FundNeuShot.fundpicname = "IMG_{}.png".format(timestr)
         sm.current = "fundneu"
 
 class FundNeuShot(Screen):
     fundpicname = ""
     capturedfund = ObjectProperty(None)
+    fundwasstil = ObjectProperty(None)
+    fundwostil = ObjectProperty(None)
+    fundbeistil = ObjectProperty(None)
     def on_enter(self, *args):
-        print(self.fundpicname)
         fundpic_source = "pic/fund/{}".format(self.fundpicname)
         fundpic_embed='''AbtLabel:
     orientation: 'vertical'
@@ -451,9 +455,22 @@ class FundNeuShot(Screen):
         fundpic_embedpy=Builder.load_string(fundpic_embed)
         self.capturedfund.add_widget(fundpic_embedpy)
 
-
-    def fundinject(self):
-        pass
+    def fundadd(self):
+        sac = ianuadb.cursor()
+        sqlsac = "INSERT INTO fund (was, wo, bei, img) VALUES (%s, %s, %s, %s)"
+        jib = (self.fundwasstil.text, self.fundwostil.text, self.fundbeistil.text, self.fundpicname)
+        sac.execute(sqlsac, jib)
+        ianuadb.commit()
+        if ianuadb.is_connected():
+            self.fundbeistil.text = ""
+            self.fundwostil.text = ""
+            self.fundwasstil.text = ""
+            sac.close()
+            pip = Popup(title='Danke',
+                        content=Label(text='gemeldet!'),
+                        size_hint=(.7, .5))
+            pip.open()
+            sm.current = "fund"
 
     def on_leave(self, *args):
         self.capturedfund.clear_widgets()
